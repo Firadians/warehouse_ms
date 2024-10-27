@@ -15,6 +15,7 @@ class WarehouseBloc extends Bloc<WarehouseEvent, WarehouseState> {
       emit(WarehouseLoading());
       try {
         final items = await _repository.getItems();
+
         emit(WarehouseLoaded(items));
       } catch (e) {
         emit(WarehouseError('Failed to load items'));
@@ -25,6 +26,7 @@ class WarehouseBloc extends Bloc<WarehouseEvent, WarehouseState> {
       try {
         await _repository.insertItem(event.item);
         final items = await _repository.getItems();
+        add(LoadItems());
         emit(WarehouseLoaded(items));
       } catch (e) {
         emit(WarehouseError('Failed to add item'));
@@ -35,6 +37,7 @@ class WarehouseBloc extends Bloc<WarehouseEvent, WarehouseState> {
       try {
         await _repository.updateItem(event.item);
         final items = await _repository.getItems();
+        add(LoadItems());
         emit(WarehouseLoaded(items));
       } catch (e) {
         emit(WarehouseError('Failed to update item'));
@@ -45,6 +48,7 @@ class WarehouseBloc extends Bloc<WarehouseEvent, WarehouseState> {
       try {
         await _repository.deleteItem(event.id);
         final items = await _repository.getItems();
+        add(LoadItems());
         emit(WarehouseLoaded(items));
       } catch (e) {
         emit(WarehouseError('Failed to delete item'));

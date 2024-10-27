@@ -13,8 +13,16 @@ class WarehouseCrudPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Warehouse Inventory')),
-      body: BlocBuilder<WarehouseBloc, WarehouseState>(
+      body: BlocConsumer<WarehouseBloc, WarehouseState>(
         bloc: bloc,
+        listener: (context, state) {
+          if (state is WarehouseError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                  content: Text('An error occurred while updating items.')),
+            );
+          }
+        },
         builder: (context, state) {
           if (state is WarehouseLoading) {
             return Center(child: CircularProgressIndicator());
@@ -43,7 +51,7 @@ class WarehouseCrudPage extends StatelessWidget {
               },
             );
           } else {
-            return Center(child: Text('Failed to load items.'));
+            return Center(child: Text('No items available.'));
           }
         },
       ),
