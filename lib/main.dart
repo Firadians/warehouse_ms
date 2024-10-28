@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:warehouse_ms/features/warehouse/presentation/bloc/warehouse_bloc.dart';
-
 import 'package:warehouse_ms/features/warehouse/data/repositories/warehouse_repository.dart';
-import 'package:warehouse_ms/features/warehouse/presentation/pages/warehouse_item_page.dart';
+import 'package:warehouse_ms/features/warehouse/presentation/bloc/warehouse_bloc.dart';
+import 'package:warehouse_ms/navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,12 +23,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: BlocBuilder<WarehouseBloc, WarehouseState>(
-          builder: (context, state) {
-            final warehouseBloc = BlocProvider.of<WarehouseBloc>(context);
-            return WarehouseCrudPage(warehouseBloc);
-          },
-        ),
+        home: NavigationPage(), // Start with the navigation page
       ),
     );
   }

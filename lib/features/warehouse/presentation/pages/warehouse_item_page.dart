@@ -5,16 +5,13 @@ import 'package:warehouse_ms/features/warehouse/presentation/bloc/warehouse_bloc
 import 'package:warehouse_ms/features/warehouse/presentation/pages/warehouse_item_form.dart';
 
 class WarehouseCrudPage extends StatelessWidget {
-  final WarehouseBloc bloc;
-
-  WarehouseCrudPage(this.bloc);
-
   @override
   Widget build(BuildContext context) {
+    final warehouseBloc = BlocProvider.of<WarehouseBloc>(context);
+
     return Scaffold(
       appBar: AppBar(title: Text('Warehouse Inventory')),
       body: BlocConsumer<WarehouseBloc, WarehouseState>(
-        bloc: bloc,
         listener: (context, state) {
           if (state is WarehouseError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -39,11 +36,13 @@ class WarehouseCrudPage extends StatelessWidget {
                     children: [
                       IconButton(
                         icon: Icon(Icons.edit),
-                        onPressed: () => _editItem(context, item),
+                        onPressed: () =>
+                            _editItem(context, warehouseBloc, item),
                       ),
                       IconButton(
                         icon: Icon(Icons.delete),
-                        onPressed: () => bloc.add(DeleteItem(item.id!)),
+                        onPressed: () =>
+                            warehouseBloc.add(DeleteItem(item.id!)),
                       ),
                     ],
                   ),
@@ -56,13 +55,13 @@ class WarehouseCrudPage extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _addItem(context),
+        onPressed: () => _addItem(context, warehouseBloc),
         child: Icon(Icons.add),
       ),
     );
   }
 
-  void _addItem(BuildContext context) {
+  void _addItem(BuildContext context, WarehouseBloc bloc) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -80,7 +79,7 @@ class WarehouseCrudPage extends StatelessWidget {
     );
   }
 
-  void _editItem(BuildContext context, WarehouseItem item) {
+  void _editItem(BuildContext context, WarehouseBloc bloc, WarehouseItem item) {
     Navigator.push(
       context,
       MaterialPageRoute(
