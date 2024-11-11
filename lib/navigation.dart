@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:warehouse_ms/features/home/presentation/pages/home.dart';
+import 'package:warehouse_ms/features/statistic/presentation/pages/statistic_page.dart';
 import 'package:warehouse_ms/features/warehouse/presentation/pages/warehouse_item_page.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _NavigationPageState extends State<NavigationPage> {
   final List<Widget> _pages = [
     HomePage(),
     WarehouseCrudPage(), // Shows warehouse items
-    // StatisticsPage(),
+    StatisticsPage(),
     // ProfilePage(),
   ];
 

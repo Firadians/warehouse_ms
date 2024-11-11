@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_ms/features/warehouse/data/models/warehouse_item.dart';
 import 'package:warehouse_ms/features/warehouse/presentation/bloc/warehouse_bloc.dart';
 import 'package:warehouse_ms/features/warehouse/presentation/pages/warehouse_item_form.dart';
+import 'package:warehouse_ms/features/warehouse/presentation/pages/warehouse_item_detail_page.dart'; // Import the new page
 
 class WarehouseCrudPage extends StatelessWidget {
   @override
@@ -31,6 +32,14 @@ class WarehouseCrudPage extends StatelessWidget {
                 return ListTile(
                   title: Text(item.name),
                   subtitle: Text('Quantity: ${item.quantity}'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => WarehouseItemDetailPage(item: item),
+                      ),
+                    );
+                  },
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
