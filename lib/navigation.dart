@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:warehouse_ms/features/home/presentation/pages/home.dart';
+import 'package:warehouse_ms/features/profile/presentation/pages/profile_page.dart';
 import 'package:warehouse_ms/features/statistic/presentation/pages/statistic_page.dart';
 import 'package:warehouse_ms/features/warehouse/presentation/pages/warehouse_item_page.dart';
 
@@ -16,7 +17,7 @@ class _NavigationPageState extends State<NavigationPage> {
     HomePage(),
     WarehouseCrudPage(), // Shows warehouse items
     StatisticsPage(),
-    // ProfilePage(),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
