@@ -9,7 +9,12 @@ class ElectronicItem extends WarehouseItem {
     required int quantity,
     required DateTime dateAdded,
     required this.warrantyPeriod,
-  }) : super(id: id, name: name, quantity: quantity, dateAdded: dateAdded);
+  }) : super(
+            id: id,
+            name: name,
+            quantity: quantity,
+            dateAdded: dateAdded,
+            type: 'electronic');
 
   @override
   Map<String, dynamic> toMap() {

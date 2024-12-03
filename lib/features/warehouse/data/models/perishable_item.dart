@@ -9,7 +9,12 @@ class PerishableItem extends WarehouseItem {
     required int quantity,
     required DateTime dateAdded,
     required this.expiryDate,
-  }) : super(id: id, name: name, quantity: quantity, dateAdded: dateAdded);
+  }) : super(
+            id: id,
+            name: name,
+            quantity: quantity,
+            dateAdded: dateAdded,
+            type: 'perishable');
 
   @override
   Map<String, dynamic> toMap() {
@@ -20,9 +25,9 @@ class PerishableItem extends WarehouseItem {
 
   factory PerishableItem.fromMap(Map<String, dynamic> map) {
     return PerishableItem(
-      id: map['id'],
-      name: map['name'],
-      quantity: map['quantity'],
+      id: map['id'] as int?,
+      name: map['name'] as String,
+      quantity: map['quantity'] as int,
       dateAdded: DateTime.parse(map['dateAdded']),
       expiryDate: DateTime.parse(map['expiryDate']),
     );

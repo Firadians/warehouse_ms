@@ -2,7 +2,7 @@ import 'package:warehouse_ms/features/warehouse/data/models/warehouse_item.dart'
 
 class FurnitureItem extends WarehouseItem {
   final String material;
-  final String dimensions; // e.g., "5ft x 3ft x 2ft"
+  final String dimensions;
 
   FurnitureItem({
     int? id,
@@ -11,7 +11,12 @@ class FurnitureItem extends WarehouseItem {
     required DateTime dateAdded,
     required this.material,
     required this.dimensions,
-  }) : super(id: id, name: name, quantity: quantity, dateAdded: dateAdded);
+  }) : super(
+            id: id,
+            name: name,
+            quantity: quantity,
+            dateAdded: dateAdded,
+            type: 'furniture');
 
   @override
   Map<String, dynamic> toMap() {
@@ -23,12 +28,12 @@ class FurnitureItem extends WarehouseItem {
 
   factory FurnitureItem.fromMap(Map<String, dynamic> map) {
     return FurnitureItem(
-      id: map['id'],
-      name: map['name'],
-      quantity: map['quantity'],
+      id: map['id'] as int?,
+      name: map['name'] as String,
+      quantity: map['quantity'] as int,
       dateAdded: DateTime.parse(map['dateAdded']),
-      material: map['material'],
-      dimensions: map['dimensions'],
+      material: map['material'] as String,
+      dimensions: map['dimensions'] as String,
     );
   }
 }

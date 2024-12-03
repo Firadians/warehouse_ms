@@ -17,7 +17,8 @@ class WarehouseCrudPage extends StatelessWidget {
           if (state is WarehouseError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                  content: Text('An error occurred while updating items.')),
+                content: Text('An error occurred while updating items.'),
+              ),
             );
           }
         },
@@ -75,13 +76,8 @@ class WarehouseCrudPage extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (_) => WarehouseItemForm(
-          onSave: (name, quantity) {
-            final newItem = WarehouseItem(
-              name: name,
-              quantity: quantity,
-              dateAdded: DateTime.now(),
-            );
-            bloc.add(AddItem(newItem));
+          onSave: (item) {
+            bloc.add(AddItem(item));
           },
         ),
       ),
@@ -94,13 +90,7 @@ class WarehouseCrudPage extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => WarehouseItemForm(
           initialItem: item,
-          onSave: (name, quantity) {
-            final updatedItem = WarehouseItem(
-              id: item.id,
-              name: name,
-              quantity: quantity,
-              dateAdded: item.dateAdded,
-            );
+          onSave: (updatedItem) {
             bloc.add(UpdateItem(updatedItem));
           },
         ),

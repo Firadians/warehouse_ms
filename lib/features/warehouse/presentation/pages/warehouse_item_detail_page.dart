@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:warehouse_ms/features/warehouse/data/models/electronic_item.dart';
+import 'package:warehouse_ms/features/warehouse/data/models/perishable_item.dart';
+import 'package:warehouse_ms/features/warehouse/data/models/furniture_item.dart';
 import 'package:warehouse_ms/features/warehouse/data/models/warehouse_item.dart';
 
 class WarehouseItemDetailPage extends StatelessWidget {
@@ -24,14 +26,41 @@ class WarehouseItemDetailPage extends StatelessWidget {
             Text('Quantity: ${item.quantity}'),
             SizedBox(height: 8),
             Text('Date Added: ${item.dateAdded.toLocal()}'.split(' ')[0]),
-            if (item is ElectronicItem) ...[
-              SizedBox(height: 8),
-              Text(
-                  'Warranty Period: ${(item as ElectronicItem).warrantyPeriod} months'),
-            ],
+            SizedBox(height: 8),
+            _buildItemDetails(
+                item), // Call method to display type-specific details
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildItemDetails(WarehouseItem item) {
+    if (item is ElectronicItem) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Warranty Period: ${item.warrantyPeriod} months'),
+        ],
+      );
+    } else if (item is PerishableItem) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Expiry Date: ${item.expiryDate.toLocal()}'.split(' ')[0]),
+        ],
+      );
+    } else if (item is FurnitureItem) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Material: ${item.material}'),
+          SizedBox(height: 8),
+          Text('Dimensions: ${item.dimensions}'),
+        ],
+      );
+    } else {
+      return Text('No additional details available for this item.');
+    }
   }
 }

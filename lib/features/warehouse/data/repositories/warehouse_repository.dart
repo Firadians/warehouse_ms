@@ -1,5 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:warehouse_ms/features/warehouse/data/models/furniture_item.dart';
+import 'package:warehouse_ms/features/warehouse/data/models/perishable_item.dart';
 import 'package:warehouse_ms/features/warehouse/data/models/warehouse_item.dart';
 
 class WarehouseRepository {
@@ -24,13 +26,17 @@ class WarehouseRepository {
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
-          CREATE TABLE items (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            quantity INTEGER,
-            dateAdded TEXT
-          )
-        ''');
+        CREATE TABLE items (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          quantity INTEGER NOT NULL,
+          dateAdded TEXT NOT NULL,
+          type TEXT NOT NULL,
+          expiryDate TEXT, -- For perishable items
+          material TEXT,   -- For furniture items
+          dimensions TEXT  -- For furniture items
+        )
+      ''');
       },
     );
   }
@@ -43,7 +49,16 @@ class WarehouseRepository {
   Future<List<WarehouseItem>> getItems() async {
     final db = await database;
     final result = await db.query('items');
-    return result.map((item) => WarehouseItem.fromMap(item)).toList();
+    return result.map((map) {
+      switch (map['type']) {
+        case 'perishable':
+          return PerishableItem.fromMap(map);
+        case 'furniture':
+          return FurnitureItem.fromMap(map);
+        default:
+          return WarehouseItem.fromMap(map);
+      }
+    }).toList();
   }
 
   Future<void> updateItem(WarehouseItem item) async {
